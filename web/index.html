@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kørekort</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div id="app">
+        <header class="topbar">
+            <div class="brand">
+                <svg viewBox="0 0 24 24" class="brand-icon"><path fill="currentColor" d="M3 17h18v2H3zM4 15l2-8 4 4 2-6 2 6 4-4 2 8z"/></svg>
+                <span>KØREKORT</span>
+            </div>
+            <button class="icon-btn" id="settingsBtn" aria-label="Indstillinger">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
+            </button>
+        </header>
+
+        <main id="content">
+            <!-- Kørekort -->
+            <section class="view active" id="view-card">
+                <div id="myCard"></div>
+                <div class="actions" id="actions">
+                    <button class="btn primary" id="sendNearestBtn">Send bevis til nærmeste politi</button>
+                    <button class="btn outline" id="airshareBtn">AirShare kort til politi</button>
+                    <p class="status" id="statusLine"></p>
+                </div>
+            </section>
+
+            <!-- Kortinfo -->
+            <section class="view" id="view-info"></section>
+
+            <!-- Modtaget (kun politi) -->
+            <section class="view" id="view-received"></section>
+        </main>
+
+        <nav class="tabbar" id="tabbar">
+            <button class="tab active" data-view="card">
+                <span class="tab-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 3v2h16V8zm0 6v2h6v-2z"/></svg></span>
+                <span>Kørekort</span>
+            </button>
+            <button class="tab hidden" data-view="received" id="receivedTab">
+                <span class="tab-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3l1.5 1.5L9 9h4v2H6V4h2v3.6l4-4.6zM4 13h4.5l1.5 3h4l1.5-3H20v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg><i class="badge hidden" id="receivedBadge"></i></span>
+                <span>Modtaget</span>
+            </button>
+            <button class="tab" data-view="info">
+                <span class="tab-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm-1 8v7h2v-7zm0-4v2h2V6z"/></svg></span>
+                <span>Kortinfo</span>
+            </button>
+        </nav>
+
+        <!-- Ark (AirShare liste / indstillinger) -->
+        <div class="sheet-backdrop" id="sheetBackdrop"></div>
+        <div class="sheet" id="sheet">
+            <div class="sheet-handle"></div>
+            <div id="sheetContent"></div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
