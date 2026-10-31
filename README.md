@@ -2,6 +2,8 @@
 
 Kørekort app til lb-phone (ESX).
 
+[Preview](https://i.ibb.co/21Nw7G8F/Screenshot-2026-10-31-201121.png)
+
 ## Installation
 
 1. Installér **esx_license** (officiel ESX resource) og kør dens SQL.
