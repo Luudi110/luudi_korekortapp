@@ -5,7 +5,7 @@ lua54 "yes"
 author "Luudi_110"
 title "luudi_korekortapp"
 description "LB Phone custom app: dansk kørekort (esx_license + p_policejob point)"
-version "0.1"
+version "0.2"
 
 shared_scripts {
     "@ox_lib/init.lua",
