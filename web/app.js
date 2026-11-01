@@ -11,7 +11,7 @@
             status: "valid", firstName: "Marc", lastName: "Polo", dob: "07. 06. 1999", age: 27,
             cardNumber: "31657372", issuedAt: 1786435200, updatedAt: 1786435200,
             categories: [{ code: "B", label: "Personbil", icon: "car" }],
-            points: 0, maxPoints: 12, issuer: "Byens Trafikkontor", country: "DK", serverId: 1,
+            points: 0, maxPoints: 12, issuer: "Los Santos Politi", country: "DK", serverId: 1,
         }),
         isPolice: () => ({ police: new URLSearchParams(location.search).has("police") }),
         getPhoto: () => ({ url: null }),
@@ -30,7 +30,7 @@
         person: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>',
         share: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-2a7 7 0 1 0-7 7v2a9 9 0 0 1 0-18zm0 4a5 5 0 0 1 5 5h-2a3 3 0 1 0-3 3v2a5 5 0 0 1 0-10zm0 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>',
         inbox: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16l2 9v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-6zm1.6 2-1.5 7H9l1 2h4l1-2h4.9l-1.5-7z"/></svg>',
-        logo: '<svg viewBox="0 0 26 30" class="dl-logo"><path d="M13 1 2 5v8c0 7.2 4.6 13 11 16 6.4-3 11-8.8 11-16V5z" fill="#1d2577"/><path d="M13 4 5 7v6c0 5.6 3.3 10.2 8 12.6 4.7-2.4 8-7 8-12.6V7z" fill="#f4c64a"/><path d="M13 7.5 8 9.4v3.8c0 3.7 2 6.9 5 8.8z" fill="#1d2577"/><circle cx="16.3" cy="12.4" r="1.8" fill="#c8202f"/></svg>',
+        logo: '<svg viewBox="0 0 26 36" class="dl-logo"><path d="M13 1.5 2 5.5v10c0 8.4 4.7 14.6 11 19 6.3-4.4 11-10.6 11-19v-10z" fill="none" stroke="#2b2d6e" stroke-width="1.6"/><path d="M13 9.2l2 4.6 5 .4-3.8 3.3 1.2 4.9L13 19.8l-4.4 2.6 1.2-4.9L6 14.2l5-.4z" fill="#2b2d6e"/></svg>',
     };
 
     const MONTHS_SHORT = ["jan.", "feb.", "mar.", "apr.", "maj", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "dec."];
@@ -84,11 +84,10 @@
         if (valid) {
             body = `
                 <div class="dl-fields">
-                    <div><span class="pill">FØDT</span><div class="dl-value">${esc(card.dob)}</div></div>
-                    <div><span class="pill">ALDER</span><div class="dl-value">${card.age != null ? `${card.age} år` : "Ukendt"}</div></div>
-                    <div><span class="pill">KORTNR.</span><div class="dl-value">${esc(card.cardNumber)}</div></div>
+                    <div><span class="dl-label">Fødselsdato</span><div class="dl-value">${esc(card.dob)}</div></div>
+                    <div><span class="dl-label">Alder</span><div class="dl-value">${card.age != null ? `${card.age} år` : "Ukendt"}</div></div>
+                    <div><span class="dl-label">Kørekortnr</span><div class="dl-value">${esc(card.cardNumber)}</div></div>
                 </div>
-                ${clipHtml(card)}
                 <div class="dl-cats">
                     ${card.categories.map((c) => `<div class="cat" title="${esc(c.label)}">${ICONS[c.icon] || ICONS.car}${esc(c.code)}</div>`).join("")}
                 </div>`;
@@ -100,15 +99,18 @@
 
         return `
             <div class="dl-card ${valid ? "" : "void"} ${opts.compact ? "compact" : ""}">
-                <div class="dl-head">
-                    ${ICONS.logo}
-                    <div class="dl-issuer">${esc(card.issuer)}<small>${issued}</small></div>
+                <div class="dl-top">
+                    <div class="dl-left">
+                        <div class="dl-head">
+                            ${ICONS.logo}
+                            <div class="dl-issuer">${esc(card.issuer)}<small>${issued}</small></div>
+                        </div>
+                        <div class="dl-name">${esc(card.firstName)}<br>${esc(card.lastName)}</div>
+                    </div>
+                    <div class="dl-photo ${photo ? "has-img" : ""}"${photoStyle}>${ICONS.person}</div>
                 </div>
-                <div class="dl-country">${esc(card.country)}</div>
-                <div class="dl-photo ${photo ? "has-img" : ""}"${photoStyle}>${ICONS.person}</div>
-                <div class="dl-name">${esc(card.firstName)}<br>${esc(card.lastName)}</div>
                 ${body}
-                <div class="dl-foot">Sidst opdateret: ${updated}</div>
+                <div class="dl-foot"><b>Sidst opdateret:</b> ${updated}</div>
             </div>`;
     }
 
@@ -138,7 +140,7 @@
                 <div class="panel">
                     <div class="row"><span class="k">Strafpoint</span><span class="v">${c.points} / ${c.maxPoints}</span></div>
                     <div class="bar"><i class="${cls}" style="width:${pct}%"></i></div>
-                    <p class="note">Point gives af politiet sammen med bøder for færdselsforseelser. Når du når ${c.maxPoints} point, frakendes kørekortet automatisk. Hver prik på kortet svarer til ${Math.round(c.maxPoints / 3)} point.</p>
+                    <p class="note">Point gives af politiet sammen med bøder for færdselsforseelser. Når du når ${c.maxPoints} point, frakendes kørekortet automatisk.</p>
                 </div>`;
         }
 
@@ -261,13 +263,17 @@
 
     function openSettings() {
         openSheet(`
-            <h3>Indstillinger</h3>
+            <h3>Kørekort</h3>
             <p class="sub">Kortet opdateres automatisk, når du åbner appen.</p>
             <div class="actions">
-                <button class="btn primary" id="refreshBtn">Opdater kort og billede</button>
+                <button class="btn primary" id="menuSendBtn"${state.card?.status === "valid" ? "" : " disabled"}>Send bevis til nærmeste politi</button>
+                <button class="btn outline" id="menuAirBtn"${state.card?.status === "valid" ? "" : " disabled"}>AirShare kort til politi</button>
+                <button class="btn outline" id="refreshBtn">Opdater kort og billede</button>
                 <button class="btn outline" id="sheetClose">Luk</button>
             </div>`);
         $("sheetClose").onclick = closeSheet;
+        $("menuSendBtn").onclick = () => { closeSheet(); $("sendNearestBtn").click(); };
+        $("menuAirBtn").onclick = () => openAirShare();
         $("refreshBtn").onclick = async () => { closeSheet(); await loadAll(true); flashStatus("Kortet er opdateret.", "ok"); };
     }
 

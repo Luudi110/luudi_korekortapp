@@ -9,7 +9,7 @@ Config.App = {
 }
 
 -- Tekst på kortet
-Config.Issuer = "Byens Trafikkontor"
+Config.Issuer = "Los Santos Politi"
 Config.CountryCode = "DK"
 
 -- Job der tæller som politi (kan modtage kørekort og ser fanen "Modtaget")
